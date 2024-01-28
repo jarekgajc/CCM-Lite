@@ -1,4 +1,4 @@
 
 export enum CsvFormat {
-    BUILT_IN = "BUILT_IN", REVOLUT = "REVOLUT"
+    AUTO_DETECT = "AUTO_DETECT", BUILT_IN = "BUILT_IN", REVOLUT = "REVOLUT"
 }

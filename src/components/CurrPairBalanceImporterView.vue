@@ -8,6 +8,7 @@ import { FileUtils } from "@/utils/FileUtils";
 import { CsvReader } from "@/utils/csvs/CsvReader";
 
 const CSV_FORMAT_OPTIONS: {value: CsvFormat, text: CsvFormat}[] = [
+  {value: CsvFormat.AUTO_DETECT, text: CsvFormat.AUTO_DETECT},
   {value: CsvFormat.BUILT_IN, text: CsvFormat.BUILT_IN},
   {value: CsvFormat.REVOLUT, text: CsvFormat.REVOLUT},
 ];
@@ -16,7 +17,7 @@ const props = defineProps<{
   onConfirm: (map: Map<CurrPair, TxnValue[]>) => void;
 }>();
 
-let csvFormat: CsvFormat = CsvFormat.BUILT_IN;
+let csvFormat: CsvFormat = CsvFormat.AUTO_DETECT;
 let file: File | undefined;
 
 function pickFile(event: Event) {

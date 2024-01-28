@@ -9,7 +9,6 @@ import { onMounted, ref, toRaw, type Ref } from "vue";
 import SaveImporterView from "./components/SaveImporterView.vue";
 import type { TxnValue } from "./models/curr_pairs/txns/TxnValue";
 
-//TODO: change TxValue.value to "from"
 //TODO: prettify views
 //TODO: autodetect csv format
 

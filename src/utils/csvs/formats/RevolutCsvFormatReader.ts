@@ -1,5 +1,6 @@
 import type { ExchangeTxnValue } from "@/models/curr_pairs/txns/ExchangeTxnValue";
 import type { CsvFormatReader } from "@/utils/csvs/formats/CsvFormatReader";
+import { AutoDetectCsvFormatUtils } from "./AutoDetectCsvFormatUtils";
 
 const COLUMNS = {
     Type: "Type",
@@ -26,5 +27,9 @@ export class RevolutCsvFormatReader implements CsvFormatReader {
             from: parseFloat(row[COLUMNS.Amount]),
             ts: new Date(row[COLUMNS.CompletedDate])
         };
+    }
+
+    static isRightFormat(row: any) {
+        return AutoDetectCsvFormatUtils.containsAllColumns(row, Object.values(COLUMNS));
     }
 }
