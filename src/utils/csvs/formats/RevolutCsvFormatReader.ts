@@ -23,7 +23,7 @@ export class RevolutCsvFormatReader implements CsvFormatReader {
         return {
             curr: row[COLUMNS.Currency],
             to: undefined,
-            value: parseFloat(row[COLUMNS.Amount]),
+            from: parseFloat(row[COLUMNS.Amount]),
             ts: new Date(row[COLUMNS.CompletedDate])
         };
     }

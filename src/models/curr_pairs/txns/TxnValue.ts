@@ -1,16 +1,16 @@
 
 export type TxnValue = {
     to: number | undefined;
-    value: number;
+    from: number;
     ts: Date;
 };
 
 
 export const TxnValueUtils = {
-    copy(txnValue: TxnValue) {
+    copy(txnValue: TxnValue): TxnValue {
         return {
             to: txnValue.to,
-            value: txnValue.value,
+            from: txnValue.from,
             ts: txnValue.ts
         };
     },

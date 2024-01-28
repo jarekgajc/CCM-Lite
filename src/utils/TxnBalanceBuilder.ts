@@ -22,11 +22,11 @@ export class TxnBalanceBuilder {
         console.log(values)
         this.aTxnValues = values
             .filter(value => value.to >= 0)
-            .map(value => ({...value, fx: Math.abs(value.value / value.to)}))
+            .map(value => ({...value, fx: Math.abs(value.from / value.to)}))
             .sort((a, b) => a.fx - b.fx);
         this.bTxnValues = values
             .filter(value => value.to < 0)
-            .map(value => ({...value, fx: Math.abs(value.value / value.to)}))
+            .map(value => ({...value, fx: Math.abs(value.from / value.to)}))
             .sort((a, b) => a.fx - b.fx);
 
         this.bValues = this.bTxnValues.map(value => -value.to);
@@ -94,7 +94,7 @@ export class TxnBalanceBuilder {
             const txnPairInfo = this.txnPairInfos[i];
             if (!txnPairInfo.others.length) {
                 this.aLeftValues.push({
-                    value: -this.aTxnValues[i].value,
+                    value: -this.aTxnValues[i].from,
                     fx: this.aTxnValues[i].fx,
                     ts: this.aTxnValues[i].ts
                 });

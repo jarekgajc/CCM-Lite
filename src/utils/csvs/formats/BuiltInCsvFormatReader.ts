@@ -10,7 +10,7 @@ export class BuiltInCsvFormatReader implements CsvFormatReader {
         return {
             curr: row["Curr"],
             to: undefined,
-            value: parseFloat(row["Value"]),
+            from: parseFloat(row["Value"]),
             ts: new Date(row["Date"])
         };
     }

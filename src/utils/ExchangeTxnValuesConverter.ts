@@ -27,7 +27,7 @@ export class ExchangeTxnValuesConverter {
                     const currPair = CurrPairUtils.fromCurrs(curr, match.curr);
                     if (currPair) {
                         const txnValue = TxnValueUtils.copy(value);
-                        txnValue.to = match.value;
+                        txnValue.to = match.from;
                         MapUtils.getOrAdd(result, currPair, []).push(txnValue);
                     }
                 }
