@@ -18,7 +18,6 @@ export class AutoDetectCsvFormatReader implements CsvFormatReader {
     private getFormatReader(row: any) {
         if(this.formatReader)
             return this.formatReader;
-        console.log(row, RevolutCsvFormatReader.isRightFormat(row), BuiltInCsvFormatReader.isRightFormat(row));
         
         if(RevolutCsvFormatReader.isRightFormat(row)) {
             return this.formatReader = new RevolutCsvFormatReader();

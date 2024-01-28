@@ -33,7 +33,11 @@ async function confirm() {
 </script>
 
 <template>
-  <b-form-select v-model="csvFormat" :options="CSV_FORMAT_OPTIONS"/>
-  <input type="file" @change="pickFile">
-  <b-button @click="confirm" variant="primary">Import</b-button>
+  <b-card
+    header="Balance Importer"
+  >
+    <b-form-select v-model="csvFormat" :options="CSV_FORMAT_OPTIONS"/>
+    <input type="file" @change="pickFile">
+    <b-button @click="confirm" variant="primary">Import</b-button>
+  </b-card>
 </template>

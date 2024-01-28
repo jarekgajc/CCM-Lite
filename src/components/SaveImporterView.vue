@@ -21,6 +21,10 @@ async function confirm() {
 </script>
 
 <template>
-  <input type="file" @change="pickFile">
-  <b-button @click="confirm" variant="primary">Import</b-button>
+  <b-card
+    header="Save Importer"
+  >
+    <input type="file" @change="pickFile">
+    <b-button @click="confirm" variant="primary">Import</b-button>
+  </b-card>
 </template>

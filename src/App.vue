@@ -9,9 +9,6 @@ import { onMounted, ref, toRaw, type Ref } from "vue";
 import SaveImporterView from "./components/SaveImporterView.vue";
 import type { TxnValue } from "./models/curr_pairs/txns/TxnValue";
 
-//TODO: prettify views
-//TODO: autodetect csv format
-
 const save: Ref<Save> = ref<Save>({
   balanceMap: {
     [CurrPair.PLN_EUR]: CurrPairBalanceUtils.getDummy(),
@@ -59,6 +56,8 @@ function replaceSave(newSave: Save) {
     <CurrPairBalanceView :balance="save.balanceMap[CurrPair.USD_EUR]" :curr-pair="CurrPair.USD_EUR"/>
   </b-card-group>
 
-  <SaveImporterView :on-confirm="replaceSave"/>
-  <CurrPairBalanceImporterView :on-confirm="appendTxnValues"/>
+  <b-card-group deck>
+    <SaveImporterView :on-confirm="replaceSave"/>
+    <CurrPairBalanceImporterView :on-confirm="appendTxnValues"/>
+  </b-card-group>
 </template>
