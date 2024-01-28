@@ -1,11 +1,11 @@
-import {CsvFormat} from "@/models/csv_formats/CsvFormat";
-import {RevolutCsvFormatReader} from "@/utils/csvs/formats/RevolutCsvFormatReader";
-import type {TxnValue} from "@/models/curr_pairs/txns/TxnValue";
-import {BuiltInCsvFormatReader} from "@/utils/csvs/formats/BuiltInCsvFormatReader";
+import { CsvFormat } from "@/models/csv_formats/CsvFormat";
+import type { ExchangeTxnValue } from "@/models/curr_pairs/txns/ExchangeTxnValue";
+import { BuiltInCsvFormatReader } from "@/utils/csvs/formats/BuiltInCsvFormatReader";
+import { RevolutCsvFormatReader } from "@/utils/csvs/formats/RevolutCsvFormatReader";
 
 export interface CsvFormatReader {
-    isValid(row: object): boolean;
-    read(row: object): TxnValue;
+    isValid(row: any): boolean;
+    read(row: any): ExchangeTxnValue;
 }
 
 

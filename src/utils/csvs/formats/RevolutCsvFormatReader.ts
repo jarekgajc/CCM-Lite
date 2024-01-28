@@ -1,5 +1,5 @@
-import type {CsvFormatReader} from "@/utils/csvs/formats/CsvFormatReader";
-import type {TxnValue} from "@/models/curr_pairs/txns/TxnValue";
+import type { ExchangeTxnValue } from "@/models/curr_pairs/txns/ExchangeTxnValue";
+import type { CsvFormatReader } from "@/utils/csvs/formats/CsvFormatReader";
 
 const COLUMNS = {
     Type: "Type",
@@ -16,11 +16,12 @@ const COLUMNS = {
 
 export class RevolutCsvFormatReader implements CsvFormatReader {
     isValid(row: any): boolean {
-        return row[COLUMNS.Type] === "EXCHANGE";
+        return row[COLUMNS.Type] === "EXCHANGE" && row[COLUMNS.State] === "COMPLETED";
     }
 
-    read(row: any): TxnValue {
+    read(row: any): ExchangeTxnValue {
         return {
+            curr: row[COLUMNS.Currency],
             to: undefined,
             value: parseFloat(row[COLUMNS.Amount]),
             ts: new Date(row[COLUMNS.CompletedDate])

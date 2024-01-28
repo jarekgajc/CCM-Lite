@@ -23,11 +23,11 @@ export class TxnBalanceBuilder {
         this.aTxnValues = values
             .filter(value => value.to >= 0)
             .map(value => ({...value, fx: Math.abs(value.value / value.to)}))
-            .sort((a, b) => b.fx - a.fx);
+            .sort((a, b) => a.fx - b.fx);
         this.bTxnValues = values
             .filter(value => value.to < 0)
             .map(value => ({...value, fx: Math.abs(value.value / value.to)}))
-            .sort((a, b) => b.fx - a.fx);
+            .sort((a, b) => a.fx - b.fx);
 
         this.bValues = this.bTxnValues.map(value => -value.to);
     }
@@ -52,7 +52,8 @@ export class TxnBalanceBuilder {
     }
 
     private buildTxnPairInfos() {
-        for (let i = this.aTxnValues.length - 1; i >= 0; i--) {
+        let j = 0;
+        for (let i = 0; i < this.aTxnValues.length; i++) {
             const aTxnValue = this.aTxnValues[i];
             const txnPairInfo: TxnPairInfo = {
                 value: aTxnValue.to,
@@ -60,7 +61,7 @@ export class TxnBalanceBuilder {
                 others: []
             };
             let aValue = aTxnValue.to;
-            for (let j = 0; j < this.bTxnValues.length; j++) {
+            for (; j < this.bTxnValues.length; j++) {
                 const bTxnValue = this.bTxnValues[j];
                 if (aTxnValue.fx < bTxnValue.fx) {
                     const diff = aValue - this.bValues[j];
@@ -78,6 +79,8 @@ export class TxnBalanceBuilder {
                         });
                         this.bValues[j] = -diff;
                         aValue = 0;
+                        if(diff === 0)
+                            j++;
                         break;
                     }
                 }
@@ -91,7 +94,7 @@ export class TxnBalanceBuilder {
             const txnPairInfo = this.txnPairInfos[i];
             if (!txnPairInfo.others.length) {
                 this.aLeftValues.push({
-                    value: this.aTxnValues[i].value,
+                    value: -this.aTxnValues[i].value,
                     fx: this.aTxnValues[i].fx,
                     ts: this.aTxnValues[i].ts
                 });
@@ -102,7 +105,7 @@ export class TxnBalanceBuilder {
                 if (value < txnPairInfo.value) {
                     const notFulfilled = txnPairInfo.value - value;
                     this.aLeftValues.push({
-                        value: notFulfilled * this.aTxnValues[i].fx,
+                        value: notFulfilled / this.aTxnValues[i].fx,
                         fx: this.aTxnValues[i].fx,
                         ts: this.aTxnValues[i].ts
                     });
@@ -121,7 +124,7 @@ export class TxnBalanceBuilder {
     }
 
     private buildLeftBValues() {
-        for (let i = this.bValues.length - 1; i >= 0; i--) {
+        for (let i = 0; i < this.bValues.length; i++) {
             const bValue = this.bValues[i];
             if (bValue > 0) {
                 this.bLeftValues.push({
