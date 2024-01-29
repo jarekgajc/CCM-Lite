@@ -38,12 +38,13 @@ function appendTxnValues(map: Map<CurrPair, TxnValue[]>) {
     save.value.balanceMap[currPair] = new CurrPairBalanceMerger(rawSave.value.balanceMap[currPair], {
       values: values
     }).merge();
-  })
-  // SaveUtils.write(rawSave.value);
+  });
+  SaveUtils.write(rawSave.value);
 }
 
 function replaceSave(newSave: Save) {
   save.value = newSave;
+  SaveUtils.write(newSave);
 }
 
 </script>

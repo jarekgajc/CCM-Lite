@@ -16,8 +16,5 @@ export const TxnValueUtils = {
     },
     isOpen(txnValue: TxnValue) {
         return txnValue.to === undefined;
-    },
-    equals(a: TxnValue, b: TxnValue) {
-        return a.ts.getTime() === b.ts.getTime();
     }
 };
