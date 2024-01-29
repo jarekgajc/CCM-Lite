@@ -1,6 +1,6 @@
-import type {TxnValue} from "@/models/curr_pairs/txns/TxnValue";
 import {TxnValueUtils} from "@/models/curr_pairs/txns/TxnValue";
 import type {CurrPairBalance} from "@/models/curr_pairs/CurrPairBalance";
+import { TxnValueMatcher } from "./TxnValueMatcher";
 
 export class CurrPairBalanceMerger {
     constructor(private readonly a: CurrPairBalance, private readonly b: CurrPairBalance) {
@@ -10,8 +10,10 @@ export class CurrPairBalanceMerger {
         const result: CurrPairBalance = {
             values: [...this.a.values]
         };
+
+        const matcher = new TxnValueMatcher(result.values);
         this.b.values.forEach(value => {
-            const duplicate = this.getDuplicate(result.values, value);
+            const duplicate = matcher.match(value);
             if (!duplicate) {
                 result.values.push(value);
             } else if(TxnValueUtils.isOpen(duplicate)) {
@@ -20,9 +22,5 @@ export class CurrPairBalanceMerger {
         });
         result.values = result.values.sort((a, b) => a.ts.getTime() - b.ts.getTime());
         return result;
-    }
-
-    private getDuplicate(original: TxnValue[], other: TxnValue) {
-        return original.find(value => TxnValueUtils.equals(value, other));
     }
 }
